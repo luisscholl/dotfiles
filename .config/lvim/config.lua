@@ -52,3 +52,40 @@ eslint.setup({
     run_on = "type", -- or `save`
   },
 })
+
+-- Debugger
+lvim.builtin.alpha.active = true
+lvim.builtin.dap.active = true
+local dap = require "dap"
+dap.adapters.cppdbg = {
+  id = 'cppdbg',
+  type = 'executable',
+  command = '/usr/local/ms-vscode.cpptools-1.21.6@linux-x64/extension/debugAdapters/bin/OpenDebugAD7'
+}
+dap.configurations.cpp = {
+  {
+    name = "Launch file",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+  },
+  {
+    name = "Launch file with arguments",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+    end,
+    args = function()
+      local args_string = vim.fn.input('Arguments: ')
+      return vim.split(args_string, " +")
+    end,
+    cwd = '${workspaceFolder}',
+    stopAtEntry = true,
+  }
+}
+lvim.keys.normal_mode["<F5>"] = ":lua require'dap'.continue()<cr>"

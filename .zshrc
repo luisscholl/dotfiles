@@ -84,6 +84,7 @@ plugins=(
   fzf
   zsh-autosuggestions
   nvm
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -122,7 +123,8 @@ source $ZSH/oh-my-zsh.sh
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 #
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/catppuccin_mocha.omp.json)"
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -139,4 +141,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-alias config='/usr/bin/git --git-dir=/home/luis/.cfg/ --work-tree=/home/luis'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=/$HOME'
+
+source ~/repos/tmp/chd_btfviewer/emsdk/emsdk_env.sh &>/dev/null
