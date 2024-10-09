@@ -8,12 +8,31 @@ lvim.plugins = {
   },
   { "neovim/nvim-lspconfig" },
   { "jose-elias-alvarez/null-ls.nvim" },
-  { "MunifTanjim/eslint.nvim" }
+  { "MunifTanjim/eslint.nvim" },
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
+	}
 }
 
 -- General formatting options
-lvim.format_on_save.enabled = true
-lvim.format_on_save.pattern = { "*.py,*.ts,*.js*,*.tsx,*.jsx" }
+lvim.keys.normal_mode["gf"] = function()
+    vim.lsp.buf.format({ async = true })
+end
+lvim.keys.visual_mode["gf"] = function()
+    vim.lsp.buf.format({ async = true })
+end
+
+--lvim.format_on_save.enabled = true
+--lvim.format_on_save.pattern = { "*.py,*.ts,*.js*,*.tsx,*.jsx,*.cjs" }
+vim.opt.showtabline = 2
+vim.opt.expandtab = false
+vim.opt.autoindent = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.listchars = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
+vim.opt.list = true
 
 -- Python
 lvim.builtin.treesitter.ensure_installed = {
@@ -23,6 +42,7 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup { { name = "black" }, }
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup { { command = "flake8", filetypes = { "python" } } }
+require'lspconfig'.biome.setup{}
 
 -- colorscheme
 lvim.colorscheme = "catppuccin-mocha"
@@ -89,3 +109,6 @@ dap.configurations.cpp = {
   }
 }
 lvim.keys.normal_mode["<F5>"] = ":lua require'dap'.continue()<cr>"
+
+-- nvimtree
+lvim.builtin.nvimtree.setup.filters.custom = { }
