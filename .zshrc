@@ -143,4 +143,6 @@ unset __conda_setup
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=/$HOME'
 
-source ~/repos/tmp/chd_btfviewer/emsdk/emsdk_env.sh &>/dev/null
+source ~/repos/chd_btfviewer/emsdk/emsdk_env.sh &>/dev/null
+
+alias python='python3'
