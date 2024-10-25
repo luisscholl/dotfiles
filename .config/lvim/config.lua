@@ -23,6 +23,9 @@ end
 lvim.keys.visual_mode["gf"] = function()
     vim.lsp.buf.format({ async = true })
 end
+lvim.keys.normal_mode["ga"] = function()
+    vim.lsp.buf.code_action()
+end
 
 --lvim.format_on_save.enabled = true
 --lvim.format_on_save.pattern = { "*.py,*.ts,*.js*,*.tsx,*.jsx,*.cjs" }
