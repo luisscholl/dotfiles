@@ -1,14 +1,25 @@
+function getHostname()
+	local f = io.open("/etc/hostname", "r")
+	if f then
+		local hostname = f:read("*a") or ""
+		f:close()
+		hostname = string.gsub(hostname, "\n$", "")
+		return hostname
+	end
+	return ""
+end
+
 lvim.keys.normal_mode["<Space>"] = "<Nop>"
 
 lvim.plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
-  },
-  { "neovim/nvim-lspconfig" },
-  { "jose-elias-alvarez/null-ls.nvim" },
-  { "MunifTanjim/eslint.nvim" },
+	{ "catppuccin/nvim",                name = "catppuccin", priority = 1000 },
+	{
+		"sindrets/diffview.nvim",
+		event = "BufRead",
+	},
+	{ "neovim/nvim-lspconfig" },
+	{ "jose-elias-alvarez/null-ls.nvim" },
+	{ "MunifTanjim/eslint.nvim" },
 	{
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -18,13 +29,13 @@ lvim.plugins = {
 
 -- General formatting options
 lvim.keys.normal_mode["gf"] = function()
-    vim.lsp.buf.format({ async = true })
+	vim.lsp.buf.format({ async = true })
 end
 lvim.keys.visual_mode["gf"] = function()
-    vim.lsp.buf.format({ async = true })
+	vim.lsp.buf.format({ async = true })
 end
 lvim.keys.normal_mode["ga"] = function()
-    vim.lsp.buf.code_action()
+	vim.lsp.buf.code_action()
 end
 
 --lvim.format_on_save.enabled = true
@@ -39,11 +50,11 @@ vim.opt.list = true
 
 -- Python
 lvim.builtin.treesitter.ensure_installed = {
-  "python",
+	"python",
 }
 require('lspconfig').ruff.setup({})
 
-require'lspconfig'.biome.setup{}
+require 'lspconfig'.biome.setup {}
 
 -- colorscheme
 lvim.colorscheme = "catppuccin-mocha"
@@ -55,23 +66,23 @@ local eslint = require("eslint")
 null_ls.setup()
 
 eslint.setup({
-  bin = 'eslint', -- or `eslint_d`
-  code_actions = {
-    enable = true,
-    apply_on_save = {
-      enable = true,
-      types = { "directive", "problem", "suggestion", "layout" },
-    },
-    disable_rule_comment = {
-      enable = true,
-      location = "separate_line", -- or `same_line`
-    },
-  },
-  diagnostics = {
-    enable = true,
-    report_unused_disable_directives = false,
-    run_on = "type", -- or `save`
-  },
+	bin = 'eslint', -- or `eslint_d`
+	code_actions = {
+		enable = true,
+		apply_on_save = {
+			enable = true,
+			types = { "directive", "problem", "suggestion", "layout" },
+		},
+		disable_rule_comment = {
+			enable = true,
+			location = "separate_line", -- or `same_line`
+		},
+	},
+	diagnostics = {
+		enable = true,
+		report_unused_disable_directives = false,
+		run_on = "type", -- or `save`
+	},
 })
 
 -- Debugger
@@ -79,37 +90,40 @@ lvim.builtin.alpha.active = true
 lvim.builtin.dap.active = true
 local dap = require "dap"
 dap.adapters.cppdbg = {
-  id = 'cppdbg',
-  type = 'executable',
-  command = '/usr/local/ms-vscode.cpptools-1.21.6@linux-x64/extension/debugAdapters/bin/OpenDebugAD7'
+	id = 'cppdbg',
+	type = 'executable',
+	command = getHostname() == 'hell' and
+			'/usr/share/cpptools-debug/bin/OpenDebugAD7' or
+			'/usr/local/ms-vscode.cpptools-1.21.6@linux-x64/extension/debugAdapters/bin/OpenDebugAD7'
 }
 dap.configurations.cpp = {
-  {
-    name = "Launch file",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  },
-  {
-    name = "Launch file with arguments",
-    type = "cppdbg",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
-    end,
-    args = function()
-      local args_string = vim.fn.input('Arguments: ')
-      return vim.split(args_string, " +")
-    end,
-    cwd = '${workspaceFolder}',
-    stopAtEntry = true,
-  }
+	{
+		name = "Launch file",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+		end,
+		cwd = '${workspaceFolder}',
+		stopAtEntry = true,
+	},
+	{
+		name = "Launch file with arguments",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+		end,
+		args = function()
+			local args_string = vim.fn.input('Arguments: ')
+			return vim.split(args_string, " +")
+		end,
+		cwd = '${workspaceFolder}',
+		stopAtEntry = true,
+	}
 }
 lvim.keys.normal_mode["<F5>"] = ":lua require'dap'.continue()<cr>"
 
 -- nvimtree
-lvim.builtin.nvimtree.setup.filters.custom = { }
+lvim.builtin.nvimtree.setup.filters.custom = {}
+lvim.builtin.project.patterns = {}
