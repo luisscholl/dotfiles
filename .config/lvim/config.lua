@@ -47,14 +47,15 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.listchars = "eol:$,tab:>-,trail:~,extends:>,precedes:<"
 vim.opt.list = true
+vim.opt.wrap = true
 
 -- Python
 lvim.builtin.treesitter.ensure_installed = {
 	"python",
 }
 require('lspconfig').ruff.setup({})
-
-require 'lspconfig'.biome.setup {}
+require('lspconfig').pyright.setup({})
+require'lspconfig'.biome.setup{}
 
 -- colorscheme
 lvim.colorscheme = "catppuccin-mocha"
