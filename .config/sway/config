@@ -269,3 +269,7 @@ exec swaync-client --inhibitor-add "onedrive"
 
 # Fcitx5 / Japanese Input / Keyboard Layouts
 exec fcitx5 &
+
+# Gnome Keyring Daemon
+exec eval $(gnome-keyring-daemon --start)
+exec export SSH_AUTH_SOCK
