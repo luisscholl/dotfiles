@@ -8,8 +8,6 @@
   // Choose the order of the modules
   "modules-left": [
     "hyprland/workspaces",
-    "hyprland/mode",
-    "hyprland/scratchpad",
     "custom/media"
   ],
   "modules-center": [],
@@ -25,7 +23,6 @@
     "temperature",
     "backlight", // todo: Replace with slider and/or configure media keys.
     "keyboard-state",
-    "hyprland/language",
     "battery",
     "battery#bat2",
     "clock",
@@ -41,7 +38,7 @@
     }
   },
   "hyprland/workspaces": {
-    "format": "{name} {icon}",
+    "format": "{name} {icon} {windows}",
     "format-icons": {
       "active": "",
       "default": ""
