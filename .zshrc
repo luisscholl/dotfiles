@@ -152,3 +152,5 @@ export PATH="$PATH:/opt/cuda/bin"
 export PATH="$PATH:/opt/cuda/nsight_compute"
 export PATH="$PATH:/opt/cuda/nsight_systems/bin"
 export NVCC_CCBIN='/usr/bin/g++-13'
+
+alias ssh="kitty +kitten ssh"
