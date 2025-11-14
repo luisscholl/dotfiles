@@ -5,3 +5,5 @@ local opt = vim.opt
 
 opt.spelllang = { "en,de_de" }
 opt.wrap = true
+opt.fileformats = "unix,dos,mac"
+vim.g.lazyvim_eslint_auto_format = true
