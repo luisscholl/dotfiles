@@ -7,6 +7,7 @@ return {
         javascript = { "prettierd", "prettier", stop_after_first = true },
         typescript = { "prettierd", "prettier", stop_after_first = true },
         css = { "prettierd", "prettier", stop_after_first = true },
+        cpp = { "clang-format", stop_after_first = true },
       },
       -- Set default options
       default_format_opts = {
@@ -55,12 +56,14 @@ return {
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "eslint-lsp",
         "css-lsp",
         "prettier",
+        "clangd",
+        "clang-format",
       },
     },
   },

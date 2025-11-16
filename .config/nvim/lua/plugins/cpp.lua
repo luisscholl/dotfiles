@@ -39,6 +39,7 @@ return {
       servers = {
         -- Ensure mason installs the server
         clangd = {
+          mason = true,
           keys = {
             { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
           },
@@ -53,7 +54,7 @@ return {
               "build.ninja"
             )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
               fname
-            ) or require("lspconfig.util").find_git_ancestor(fname)
+            ) --or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
           end,
           capabilities = {
             offsetEncoding = { "utf-16" },
@@ -88,7 +89,7 @@ return {
     optional = true,
     dependencies = {
       -- Ensure C/C++ debugger is installed
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       optional = true,
       opts = { ensure_installed = { "codelldb" } },
     },

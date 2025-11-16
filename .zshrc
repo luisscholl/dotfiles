@@ -153,4 +153,7 @@ export PATH="$PATH:/opt/cuda/nsight_compute"
 export PATH="$PATH:/opt/cuda/nsight_systems/bin"
 export NVCC_CCBIN='/usr/bin/g++-13'
 
+export PATH="$PATH:/home/luis/repos/vcpkg"
+export VCPKG_ROOT="/home/luis/repos/vcpkg"
+
 alias ssh="kitty +kitten ssh"
