@@ -39,23 +39,22 @@ return {
       servers = {
         -- Ensure mason installs the server
         clangd = {
-          mason = true,
           keys = {
-            { "<leader>ch", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+            { "<leader>ch", "<cmd>LspClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
           },
-          root_dir = function(fname)
-            return require("lspconfig.util").root_pattern(
-              "Makefile",
-              "configure.ac",
-              "configure.in",
-              "config.h.in",
-              "meson.build",
-              "meson_options.txt",
-              "build.ninja"
-            )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-              fname
-            ) --or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-          end,
+          root_markers = {
+            "compile_commands.json",
+            "compile_flags.txt",
+            "configure.ac", -- AutoTools
+            "Makefile",
+            "configure.ac",
+            "configure.in",
+            "config.h.in",
+            "meson.build",
+            "meson_options.txt",
+            "build.ninja",
+            ".git",
+          },
           capabilities = {
             offsetEncoding = { "utf-16" },
           },
@@ -83,6 +82,15 @@ return {
         end,
       },
     },
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    optional = true,
+    opts = function(_, opts)
+      opts.sorting = opts.sorting or {}
+      opts.sorting.comparators = opts.sorting.comparators or {}
+      table.insert(opts.sorting.comparators, 1, require("clangd_extensions.cmp_scores"))
+    end,
   },
   {
     "mfussenegger/nvim-dap",
@@ -131,5 +139,10 @@ return {
       end
     end,
   },
-  opts = { ensure_installed = { "codelldb" } },
+  {
+    -- Ensure C/C++ debugger is installed
+    "mason-org/mason.nvim",
+    optional = true,
+    opts = { ensure_installed = { "codelldb" } },
+  },
 }
