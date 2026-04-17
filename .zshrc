@@ -157,3 +157,7 @@ export PATH="$PATH:/home/luis/repos/vcpkg"
 export VCPKG_ROOT="/home/luis/repos/vcpkg"
 
 alias ssh="kitty +kitten ssh"
+
+export VCPKG_ROOT=/home/luis/repos/vcpkg
+export PATH=$VCPKG_ROOT:$PATH
+
